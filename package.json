@@ -1,32 +1,41 @@
 {
-  "name": "@slide-computer/signer",
-  "version": "3.16.0",
+  "name": "icp-js-signer",
+  "version": "4.0.0",
   "private": true,
   "description": "Initiate transactions and authenticate with signers on the Internet Computer",
-  "workspaces": {
-    "packages": [
-      "./packages/signer",
-      "./packages/signer-storage",
-      "./packages/signer-agent",
-      "./packages/signer-client",
-      "./packages/signer-signatures",
-      "./packages/signer-web",
-      "./packages/signer-extension",
-      "./packages/signer-test",
-      "./packages/signer-transport-auth-client",
-      "./packages/signer-transport-stoic"
-    ]
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "esbuild": "^0.25.5",
+    "eslint": "^9.32.0",
+    "husky": "^8.0.3",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
+  "engines": {
+    "node": "^20 || ^22",
+    "pnpm": ">=10",
+    "npm": "please use pnpm"
   },
   "scripts": {
-    "build": "npm run build --workspaces"
+    "build": "pnpm -r build",
+    "build:packages": "pnpm -F './packages/*' -F '!./packages/migrate' build",
+    "bundle": "pnpm build:packages && pnpm -r bundle",
+    "publish:dfinity-packages": "pnpm -r -F './packages/{agent,assets,auth-client,candid,identity,identity-secp256k1,principal}' publish",
+    "publish:core-package": "pnpm -F './packages/core' publish",
+    "version": "pnpm dlx tsx bin/version.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky install",
+    "prettier:check": "npx -p prettier -p pretty-quick pretty-quick --check --branch main",
+    "prettier:format": "npx -p prettier -p pretty-quick pretty-quick --branch main",
+    "postversion": "pnpm prettier:format"
   },
-  "author": "Slide",
-  "license": "MIT",
-  "devDependencies": {
-    "esbuild": "^0.25.1",
-    "eslint": "^9.22.0",
-    "prettier": "^3.5.3",
-    "typescript": "^5.8.2",
-    "@types/node": "^22.13.10"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sea-snake/icp-js-signer"
+  },
+  "author": "DFINITY Stiftung <sdk@dfinity.org>",
+  "license": "Apache-2.0"
 }

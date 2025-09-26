@@ -1,10 +1,3 @@
-export * from "./icrc25";
-export * from "./icrc27";
-export * from "./icrc34";
-export * from "./icrc39";
-export * from "./icrc49";
-export * from "./icrc112";
-export * from "./signer";
-export * from "./errors";
-export * from "./transport";
-export * from "./utils";
+// Make signer available from root e.g. import { Signer } from "@icp-sdk/signer"
+// While others are available from sub dir e.g. import { SignerAgent } from "@icp-sdk/signer/agent"
+export * from './signer';
